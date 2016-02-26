@@ -30,16 +30,21 @@ def word_transformer(word):
 
 def process_madlib(mad_lib):
     processed = ''
-    processed1 = ''
+    counter = 4
     while mad_lib != '':
         next_caracter = mad_lib[0]
-        if mad_lib[:4] == "NOUN":
-            print word_transformer(mad_lib)
-            print "Value of processed inside of IF:", processed
-        processed = processed + next_caracter
-        mad_lib=mad_lib[1:]
-
-        #print "MAD_LIB value is:", mad_lib
+        if mad_lib[:4] == "NOUN" or mad_lib[:4] == "VERB":
+            #print "Value of MAD_LIB:", mad_lib
+            processed = processed + word_transformer(mad_lib[:4])
+            #print processed
+            mad_lib=mad_lib[4:]
+            #print "Value of MAD_LIB:", mad_lib
+            #print "Processed before leaving IF:", processed
+           # if mad_lib[:4] != "NOUN":
+        #if mad_lib[:4] != "NOUN":
+        else:
+            processed = processed + next_caracter
+            mad_lib=mad_lib[1:]
     return processed
 
     #return processed
