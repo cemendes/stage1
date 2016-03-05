@@ -1,0 +1,62 @@
+# Given your birthday and the current date, calculate your age
+# in days. Compensate for leap days. Assume that the birthday
+# and current date are correct dates (and no time travel).
+# Simply put, if you were born 1 Jan 2012 and todays date is
+# 2 Jan 2012 you are 1 day old.
+
+daysOfMonths = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+def nextDay(year, month, day):
+    """
+    Returns the year, month, day of the next day.
+    Simple version: assume every month has 30 days.
+    """
+    # YOUR CODE HERE
+    if month == 12 and day == 30: # This section takes care of end of year cases
+        month = 1
+        day = 1
+        year += 1
+    elif day == 30: # This takes care of if end of the month cases
+        month += 1
+        day = 1
+    else: # This takes of day changes.
+        day += 1
+
+
+def isLeapYear(year):
+    if year % 4 != 0:
+        return year, "is a Common Year"
+    elif year % 100 != 0:
+        return year, "is a leap year"
+    elif year % 400 != 0:
+        return year, "is a common year"
+
+def daysBetweenDates(y1, m1, d1, y2, m2, d2):
+    gregorian_year = 1582
+    if y2 < y1:
+        print "Invalid date. The second date must not be before first date."
+    elif y1 < gregorian_year or y2 < gregorian_year:
+        print "Date must be within the Gregorian Calendar Year."
+    elif m1 > 12 or m2 > 12:
+        print "Invalid Month"
+    elif d1 > daysOfMonths[m1-1] or d2 > daysOfMonths[m2-1]:
+        print "Invalid day"
+
+   # while y1 != y2 or m1 != m2 or d1 != d2:
+    print nextDay(y1,m1,d1)
+
+
+
+#print isLeapYear(2016)
+#daysBetweenDates(2012,01,01,2012,01,02)
+#>>Return 1 day
+#daysBetweenDates(2012,1,1,2011,1,2)
+#>>Return "Invalid date. The second date must not be before first date."
+#daysBetweenDates(1580,1,1,1581,1,2)
+#>>Return "Date must be within the Gregorian Calendar Year."
+daysBetweenDates(1981,2,9,2016,3,3)
+#>>Return 12,806
+
+
+
+
