@@ -12,7 +12,7 @@ def nextDay(year, month, day):
     Simple version: assume every month has 30 days.
     """
     # YOUR CODE HERE
-    if month == 12 and day == 30: # This section takes care of end of year cases
+    if month == 12 and day == 31: # This section takes care of end of year cases
         month = 1
         day = 1
         year += 1
@@ -21,6 +21,7 @@ def nextDay(year, month, day):
         day = 1
     else: # This takes of day changes.
         day += 1
+    return year, month, day
 
 
 def isLeapYear(year):
@@ -31,32 +32,41 @@ def isLeapYear(year):
     elif year % 400 != 0:
         return year, "is a common year"
 
-def daysBetweenDates(y1, m1, d1, y2, m2, d2):
+def daysBetweenDates(year1, month1, day1, year2, month2, day2):
     gregorian_year = 1582
-    if y2 < y1:
-        print "Invalid date. The second date must not be before first date."
-    elif y1 < gregorian_year or y2 < gregorian_year:
-        print "Date must be within the Gregorian Calendar Year."
-    elif m1 > 12 or m2 > 12:
-        print "Invalid Month"
-    elif d1 > daysOfMonths[m1-1] or d2 > daysOfMonths[m2-1]:
-        print "Invalid day"
-
-   # while y1 != y2 or m1 != m2 or d1 != d2:
-    print nextDay(y1,m1,d1)
+    total_days = 0
+    assert (year2 >= year1),"Invalid date.The second date must not be before first date."
+    assert not (year2 == year1 and month2 < month1), "Invalid date.The second date must not be before first date."
+#    elif year1 < gregorian_year or year2 < gregorian_year:
+#        print "Date must be within the Gregorian Calendar Year."
+#    elif month1 > 12 or month2 > 12:
+#        print "Invalid Month"
+#    elif day1 > daysOfMonths[month1-1] or day2 > daysOfMonths[month2-1]:
+#        print "Invalid day"
 
 
+    while year1 != year2 or month1 != month2 or day1 != day2:
+    #while total_days == 3:
+        year1 = nextDay(year1,month1,day1)[0]
+        month1 = nextDay(year1,month1,day1)[1]
+        day1 = nextDay(year1,month1,day1)[2]
+        #print year1, month1, day1
+        total_days += 1
+    print total_days
 
 #print isLeapYear(2016)
 #daysBetweenDates(2012,01,01,2012,01,02)
 #>>Return 1 day
-#daysBetweenDates(2012,1,1,2011,1,2)
+#print daysBetweenDates(2012,1,1,2011,1,2)
 #>>Return "Invalid date. The second date must not be before first date."
 #daysBetweenDates(1580,1,1,1581,1,2)
 #>>Return "Date must be within the Gregorian Calendar Year."
-daysBetweenDates(1981,2,9,2016,3,3)
+#daysBetweenDates(1981,2,9,2016,3,3)
 #>>Return 12,806
-
+daysBetweenDates(2012,9,30,2012,10,30)
+daysBetweenDates(2012,1,1,2013,1,1)
+daysBetweenDates(2012,9,1,2012,9,4)
+daysBetweenDates(1991,3,1,1991,1,3)
 
 
 
