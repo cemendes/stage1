@@ -22,13 +22,13 @@ def nextDay(year, month, day):
     Simple version: assume every month has 30 days.
     """
     # YOUR CODE HERE
-    if month == 12 and day == daysOfMonths[12-1]:
+    if month == 12 and day == daysOfMonths[11]: # Check if last day of December
         month, day = 1, 1
         year += 1
-    elif day == daysOfMonths[month-1]:
+    elif month == 2 and day == 29: # Move month if leap year.
          month += 1
          day = 1
-    elif day == 29: #Do nothing if is a leap year
+    elif day == daysOfMonths[month-1]:
          month += 1
          day = 1
     else:
@@ -54,18 +54,18 @@ def daysBetweenDates(year1, month1, day1, year2, month2, day2):
     # program defensively! Add an assertion if the input is not valid!
     assert not dateIsBefore(year2, month2, day2, year1, month1, day1)
     total_days = 0
-    check_leap_year = year1
+    check_leap_year = 0
     counter = 0
-    #while dateIsBefore(year1, month1, day1, year2, month2, day2):
-    while counter == 5:
+    while dateIsBefore(year1, month1, day1, year2, month2, day2):
         year1, month1, day1 = nextDay(year1, month1, day1)
-        print year1, month1, day1
+        #print year1, month1, day1
         total_days += 1
         counter += 1
-        # while check_leap_year != year1:
-        #     check_leap_year = year1
-        #     if isLeapYear(year1) == True:
-        #         days +=1
+        while check_leap_year != year1:
+            check_leap_year = year1
+            if isLeapYear(year1) == True and month1 <= 2 and day2 !=28:
+                #print "Entered the IF Statement"
+                total_days +=1
     return total_days
 
 def test():
@@ -78,11 +78,12 @@ def test():
     for (args, answer) in test_cases:
         result = daysBetweenDates(*args)
         if result != answer:
-            print "Test with data:", args, "failed"
+            print "Test with data:", args, "failed." "Days", result
         else:
             print "Test case passed!"
 
-#test()
+test()
 
-print daysBetweenDates(1981,2,9,2016,3,3)
+#print daysBetweenDates(1981,2,9,2016,3,3)
+print daysBetweenDates(2012, 9, 30, 2012, 10, 30)
 #>>Return 12,806
